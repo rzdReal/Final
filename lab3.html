@@ -1,0 +1,49 @@
+<!DOCTYPE>
+<html>
+<head>
+
+</head>
+<body>
+    <script>
+        var Module = {
+            onRuntimeInitialized: function () {
+                Module.articleAnalyzer(1);
+                var analyzer = new Module.articleAnalyzer(1);
+
+            }
+        };
+        var i = 0;
+        var arr = new Array();
+        console.log = function (data) {
+            var text = document.getElementById("output");
+            text.value = text.value + data + "\n";
+        }
+        function add() {
+            //alert("button click");
+            //var a = document.getElementById("a").value;
+            //var b = document.getElementById("b").value;
+            var analyzer = new Module.articleAnalyzer(8);
+            //alert(ac.add(a, b));
+            var input = document.getElementById("input");
+            var start = performance.now();
+            var b = analyzer.process(input.value);
+            var end = performance.now();
+            console.log(" Task Running time:" + (end - start) + " milliseconds<br>");
+            arr[i] = end - start;
+            i++;
+            if (b == "") {alert("Empty")};
+            console.log(b);
+        }
+        function analyse() {
+            arr.sort = function (a, b) { return a < b; }
+            console.log(arr[arr.length * 0.9]+"90 percential is from low to high");
+        }
+    </script>
+    <script src="output.js">
+    </script>
+    <button id="add" onclick="add()">process</button><br>
+    <button onclick="analyse()">analyse</button><br >
+    <textarea id="input" rows="15" cols="150"></textarea>
+    <textarea id="output" rows="15" cols="150"></textarea>
+</body>
+</html>
