@@ -6,15 +6,6 @@
     <div id='messages'></div>
     <script>
         const getElement = (id) => document.getElementById(id);
-        fs = require('fs');
-        fs.readFile('input.txt', 'utf8', function (err, data) {
-            if (err) {
-                return console.log(err);
-            }
-            console.log("reading data is finished")
-            console.log(data);
-            getElement('message').value = data;
-        });
         const addMessage = (message) => {
             const pTag = document.createElement('p');
             pTag.appendChild(document.createTextNode(message));
