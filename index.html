@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>BIRD ChatBot</title>
+    <link rel="stylesheet" type="text/css" href="chat.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CRoboto:300,400,500" media="all">
+    <link rel="stylesheet" href="switchery.min.css" />
+    <link rel="stylesheet" type="text/css" href="loaders.min.css">
+</head>
+<script>
+    const getElement = (id) => document.getElementById(id);
+    const addMessage = (message) => {
+        const pTag = document.createElement('p');
+        pTag.appendChild(document.createTextNode("Server responses: "+message));
+        getElement('messages').appendChild(pTag);
+    };
+    const ws = new WebSocket('ws://localhost:4500');
+    ws.onopen = () => {
+        console.log('Now connected');
+    };
+    ws.onmessage = (event) => {
+        const messages = JSON.parse(event.data);
+        messages.forEach(addMessage);
+    };
+    const send = () => {
+        var message = getElement('message').value
+        const Div = document.createElement('div');
+        Div.align = "right";
+        const pTag = document.createElement('p');
+        Div.appendChild(pTag)
+        pTag.appendChild(document.createTextNode("User sends: " + message));
+        getElement('messages').appendChild(Div);
+        console.log(message)
+        ws.send(message)
+        getElement('message').value = '';
+    };
+    const describe = () => {
+        const pTag = document.createElement('p');
+        pTag.appendChild(document.createTextNode("Description: This html will use multithreading to process users' input data and return the count of the same word"));
+        getElement('messages').appendChild(pTag);
+    }
+</script>
+
+<body>
+    <div class="chat_window">
+        <ul>
+            <li><a href="description.txt" download="description.txt" onclick="describe()">description</a></li>
+            <li><a href="chat.js" download="chat.js">download native version</a></li>
+        </ul>
+        <div class="top_menu">
+            <button style="background-color: #eee; height: 100%; border: hidden">
+                <!--<a href="chat.js" download="chat.js" style="height: 100%; background-color: #eee;border:hidden">download native version</a>-->
+            </button>
+            <div class="title">string processing</div>
+            <div class="toggle">
+                <label class="toggle-wrapper" id="help-toggle" style="display:none;">
+                    Help with the development
+                    <input type="checkbox" class="js-help-switch" checked />
+                    <div class="toggle-tooltip" style="display:none;">
+                        You can help!
+                        <div class="close" data-dynamite-selected="true">x</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <ul class="messages scrollbar-custom theme1" id="messages"></ul>
+        <div class="bottom_wrapper clearfix">
+            <div class="message_input_wrapper">
+                <input class="message_input" placeholder="Input your data here..." / id="message">
+            </div>
+            <div class="send_message">
+                <div class="icon" style="display:none"></div>
+                <div class="text" onclick="send()">Send</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="message_template">
+        <li class="message">
+            <div class="text_wrapper feedback" id="wrapper" style="width: 0px; opacity: 0;">
+                <div class="intent-info" style="display: none">
+                    <span class="intent">intent name</span>
+                    <div class="feedback-btn-container">
+                        <span class="feedback_yes btn green">✓</span>
+                        <span class="feedback_no btn red">X</span>
+                    </div>
+                    </form>
+                    </form>
+                </div>
+            </div>
+            <div class="avatar"></div>
+            <div class="text_wrapper">
+                <div class="text"></div>
+                <div class="message-time"></div>
+            </div>
+        </li>
+    </div>
+    <div id="checkTemplate" style="display:none">
+        <div id="checkYes" style="display:none">
+            <svg class="checkmark positive" id="check-1" viewBox="0 0 52 52"><circle class="circle positive" cx="26" cy="26" r="25" fill="none" /><path class="check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>
+        </div>
+        <div id="checkNo" style="display:none">
+            <svg class="checkmark negative" id="check-1" viewBox="0 0 52 52"><circle class="circle negative" cx="26" cy="26" r="25" fill="none" /><path class="check" fill="none" d="M13 13 L38 38 M13 38 L38 13" /></svg>
+        </div>
+    </div>
+</body>
+
+
+</html>
