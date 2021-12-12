@@ -1,1 +1,3 @@
 "Description: This html will use multithreading to process users' input data and return the count of the same word"
+You can download the native version and running it with command: npm start (npm is required)
+Dont forgrt to run the server with command: node webSocket.js
